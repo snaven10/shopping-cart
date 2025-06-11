@@ -8,7 +8,7 @@
   <packaging>pom</packaging>
 
   <modules>
-    <!-- Add modules here -->
+    <module>common</module>
   </modules>
 
   <properties>
