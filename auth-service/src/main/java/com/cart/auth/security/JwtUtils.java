@@ -2,22 +2,20 @@ package com.cart.auth.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.security.*;
 import java.security.spec.*;
 import java.util.Date;
 
 public class JwtUtils {
 
-    private static final String PRIVATE_KEY_PATH = "src/main/resources/keys/private.pem";
-    private static final String PUBLIC_KEY_PATH = "src/main/resources/keys/public.pem";
-
     private static PrivateKey getPrivateKey() throws Exception {
-        String key = new String(Files.readAllBytes(Paths.get(PRIVATE_KEY_PATH)))
+        InputStream is = JwtUtils.class.getClassLoader().getResourceAsStream("keys/private.pem");
+        if (is == null)
+            throw new FileNotFoundException("Private key not found in resources");
+        String key = new String(is.readAllBytes())
                 .replace("-----BEGIN PRIVATE KEY-----", "")
                 .replace("-----END PRIVATE KEY-----", "")
                 .replaceAll("\\s", "");
@@ -27,7 +25,10 @@ public class JwtUtils {
     }
 
     private static PublicKey getPublicKey() throws Exception {
-        String key = new String(Files.readAllBytes(Paths.get(PUBLIC_KEY_PATH)))
+        InputStream is = JwtUtils.class.getClassLoader().getResourceAsStream("keys/public.pem");
+        if (is == null)
+            throw new FileNotFoundException("Public key not found in resources");
+        String key = new String(is.readAllBytes())
                 .replace("-----BEGIN PUBLIC KEY-----", "")
                 .replace("-----END PUBLIC KEY-----", "")
                 .replaceAll("\\s", "");
