@@ -1,4 +1,4 @@
-package com.cart.auth.security;
+package com.cart.common.security;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +18,9 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
                          AuthenticationException authException)
             throws IOException, ServletException {
 
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType("application/json");
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+        response.getWriter().write("{\"error\": \"Unauthorized - invalid or missing token\"}");
     }
 }

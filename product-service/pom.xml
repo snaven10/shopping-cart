@@ -58,6 +58,12 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+        <groupId>com.cart</groupId>
+        <artifactId>common</artifactId>
+        <version>1.0.0</version> <!-- O la versión que tengas -->
+    </dependency>
   </dependencies>
 
   <build>

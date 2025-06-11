@@ -1,4 +1,4 @@
-package com.cart.auth.security;
+package com.cart.common.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
