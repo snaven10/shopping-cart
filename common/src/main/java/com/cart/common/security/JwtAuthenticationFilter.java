@@ -39,7 +39,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (Exception e) {
-                // optional logging here
+                logger.warn("JWT processing failed: " + e.getMessage());
             }
         }
 
