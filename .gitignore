@@ -1,5 +1,23 @@
+# Java / Maven
+target/
+*.log
+*.class
+*.jar
+
+# IDEs
 .idea/
 .vscode/
-target/
 *.iml
+
+# Maven wrapper logs
+.mvn/wrapper/maven-wrapper.jar
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Spring Boot dev
+.spring-boot-devtools.properties
+
+# Others
 .env
