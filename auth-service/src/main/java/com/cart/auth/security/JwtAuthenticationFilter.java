@@ -1,5 +1,6 @@
 package com.cart.auth.security;
 
+import com.cart.common.security.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +18,12 @@ import java.util.Collections;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    private final JwtService jwtService;
+
+    public JwtAuthenticationFilter(JwtService jwtService) {
+        this.jwtService = jwtService;
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -25,10 +32,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = getJwtFromRequest(request);
 
-        if (token != null && JwtUtils.isTokenValid(token)) {
+        if (token != null && jwtService.isTokenValid(token)) {
             String username;
             try {
-                username = JwtUtils.extractUsername(token);
+                username = jwtService.extractUsername(token);
             } catch (Exception e) {
                 throw new ServletException("Invalid JWT token", e);
             }

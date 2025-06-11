@@ -3,7 +3,10 @@ package com.cart.auth;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {
+    "com.cart.auth",
+    "com.cart.common.security"
+})
 public class AuthServiceApplication {
 
 	public static void main(String[] args) {

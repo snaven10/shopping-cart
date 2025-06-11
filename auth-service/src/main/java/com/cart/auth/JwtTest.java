@@ -1,25 +1,28 @@
 package com.cart.auth;
 
-import com.cart.auth.security.JwtUtils;
+import com.cart.common.security.JwtService;
+import com.cart.common.security.impl.JwtServiceImpl;
 
 public class JwtTest {
 
     public static void main(String[] args) {
+        JwtService jwtService = new JwtServiceImpl(); // ✅ implementación directa para pruebas
+
         try {
             // 🔐 Generar token
-            String token = JwtUtils.generateToken("test-user");
+            String token = jwtService.generateToken("test-user");
             System.out.println("🔐 Token generado:\n" + token);
 
-            // ✅ Verificar si es válido
-            boolean isValid = JwtUtils.isTokenValid(token);
+            // ✔️ Validar token
+            boolean isValid = jwtService.isTokenValid(token);
             System.out.println("✔️ ¿Token válido? " + isValid);
 
-            // 👤 Obtener el nombre de usuario (subject)
-            String username = JwtUtils.extractUsername(token);
-            System.out.println("👤 Usuario extraído: " + username);
+            // 👤 Obtener el usuario
+            String username = jwtService.extractUsername(token);
+            System.out.println("👤 Subject extraído: " + username);
 
         } catch (Exception e) {
-            System.err.println("❌ Error ejecutando JwtTest:");
+            System.err.println("❌ Error en la prueba JWT: " + e.getMessage());
             e.printStackTrace();
         }
     }
