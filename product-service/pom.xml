@@ -64,6 +64,13 @@
         <artifactId>common</artifactId>
         <version>1.0.0</version> <!-- O la versión que tengas -->
     </dependency>
+
+    <dependency>
+      <groupId>com.cart</groupId>
+      <artifactId>common</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    
   </dependencies>
 
   <build>
