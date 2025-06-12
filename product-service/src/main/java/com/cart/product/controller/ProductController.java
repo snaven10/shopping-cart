@@ -1,19 +1,32 @@
 package com.cart.product.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.cart.product.dto.ProductDto;
+import com.cart.product.service.ProductService;
+import com.cart.common.response.ApiResponse;
+
+import lombok.RequiredArgsConstructor;
+
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/products")
+@RequiredArgsConstructor
 public class ProductController {
 
-    @GetMapping("/public")
-    public ResponseEntity<String> getPublicEndpoint() {
-        return ResponseEntity.ok("🌐 Public product info.");
+     private final ProductService productService;
+
+    @GetMapping
+    public ResponseEntity<?> getAll() {
+        List<ProductDto> products = productService.getAllProducts();
+        return ResponseEntity.ok(ApiResponse.success("Products fetched", products));
     }
 
-    @GetMapping("/secure")
-    public ResponseEntity<String> getSecureEndpoint() {
-        return ResponseEntity.ok("🔐 Secure product info (JWT validated).");
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable("id") Long id) {
+        ProductDto product = productService.getProductById(id);
+        return ResponseEntity.ok(ApiResponse.success("Product fetched", product));
     }
 }

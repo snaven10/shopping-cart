@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication(scanBasePackages = {
     "com.cart.product",
-    "com.cart.common.security"
+    "com.cart.common"
 })
 public class ProductServiceApplication {
 

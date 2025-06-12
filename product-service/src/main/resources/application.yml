@@ -1,0 +1,9 @@
+server:
+  port: 8082
+
+fakestore:
+  base-url: https://fakestoreapi.com
+
+spring:
+  application:
+    name: product-service
