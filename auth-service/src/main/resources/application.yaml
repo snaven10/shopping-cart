@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:sqlite:auth.db
+    driver-class-name: org.sqlite.JDBC
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.SQLiteDialect
+    show-sql: true
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration

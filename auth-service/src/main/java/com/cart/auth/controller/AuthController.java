@@ -1,46 +1,25 @@
 package com.cart.auth.controller;
 
-import com.cart.common.security.JwtService;
-import org.springframework.http.HttpStatus;
+import com.cart.auth.dto.LoginRequest;
+import com.cart.auth.dto.LoginResponse;
+import com.cart.auth.service.AuthService;
+import com.cart.common.response.ApiResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
-    private final JwtService jwtService;
+    private final AuthService authService;
 
-    public AuthController(JwtService jwtService) {
-        this.jwtService = jwtService;
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        String token = authService.login(request.getUsername(), request.getPassword());
+        LoginResponse loginResponse = new LoginResponse(token, request.getUsername());
+        return ResponseEntity.ok(ApiResponse.success("Login successful", loginResponse));
     }
 
-    @GetMapping("/token")
-    public ResponseEntity<?> generateToken(@RequestParam("username") String username) {
-        try {
-            String token = jwtService.generateToken(username);
-            return ResponseEntity.ok().body("Bearer " + token);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error generating token: " + e.getMessage());
-        }
-    }
-
-    @GetMapping("/validate")
-    public ResponseEntity<?> validateToken(@RequestParam("token") String token) {
-        System.out.println(">>> Validating token: " + token);
-        try {
-            boolean isValid = jwtService.isTokenValid(token);
-            String username = isValid ? jwtService.extractUsername(token) : "Invalid token";
-            return ResponseEntity.ok().body(Map.of(
-                    "valid", isValid,
-                    "username", username));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("error", "Token validation failed", "details", e.getMessage()));
-        }
-    }
 }
