@@ -28,7 +28,8 @@ public class SecurityConfig {
                 .exceptionHandling(eh -> eh.authenticationEntryPoint(authEntryPoint))
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/products/public").permitAll()
                         .requestMatchers("/orders/public").permitAll()
                         .requestMatchers("/payments/public").permitAll()
