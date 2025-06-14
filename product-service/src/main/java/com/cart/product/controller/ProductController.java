@@ -29,4 +29,9 @@ public class ProductController {
         ProductDto product = productService.getProductById(id);
         return ResponseEntity.ok(ApiResponse.success("Product fetched", product));
     }
+
+    @GetMapping("/internal/{id}")
+    public ProductDto getByIdInternal(@PathVariable("id") Long id) {
+        return productService.getProductById(id);
+    }
 }
