@@ -10,7 +10,7 @@ public class JwtTest {
 
         try {
             // 🔐 Generar token
-            String token = jwtService.generateToken("test-user");
+            String token = jwtService.generateToken(null, "test-user");
             System.out.println("🔐 Token generado:\n" + token);
 
             // ✔️ Validar token
