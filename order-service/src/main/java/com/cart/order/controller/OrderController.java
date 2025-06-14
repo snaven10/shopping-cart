@@ -1,19 +1,31 @@
 package com.cart.order.controller;
 
+import com.cart.order.dto.OrderRequest;
+import com.cart.order.service.OrderService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/api/orders")
+@RequiredArgsConstructor
 public class OrderController {
 
-    @GetMapping("/public")
-    public ResponseEntity<String> publicEndpoint() {
-        return ResponseEntity.ok("📦 Public order info");
+    private final OrderService orderService;
+
+    @PostMapping
+    public ResponseEntity<?> createOrder(@RequestBody OrderRequest request) {
+        return ResponseEntity.ok(orderService.createOrder(request));
     }
 
-    @GetMapping("/secure")
-    public ResponseEntity<String> secureEndpoint() {
-        return ResponseEntity.ok("🔐 Secure order info (JWT validated)");
+    @GetMapping
+    public ResponseEntity<?> getAllOrders() {
+        return ResponseEntity.ok(orderService.getAllOrders());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getOrderById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(orderService.getOrderById(id));
     }
 }
