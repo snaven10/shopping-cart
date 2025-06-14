@@ -12,6 +12,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.*;
 import java.util.Date;
+import java.util.Map;
 
 @Service
 public class JwtServiceImpl implements JwtService {
@@ -49,16 +50,33 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public String generateToken(String username) {
+    public String generateToken(Map<String, Object> extraClaims, String username) {
         try {
             return Jwts.builder()
+                    .setClaims(extraClaims)
                     .setSubject(username)
                     .setIssuedAt(new Date())
                     .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 1000))
                     .signWith(getPrivateKey(), SignatureAlgorithm.RS256)
                     .compact();
         } catch (Exception e) {
-            throw new JwtProcessingException("Error generating token", e);
+            throw new JwtProcessingException("Error generating token with extra claims", e);
+        }
+    }
+
+    @Override
+    public Long extractUserId(String token) {
+        try {
+            Object userId = getClaims(token).get("userId");
+            if (userId instanceof Integer) {
+                return ((Integer) userId).longValue();
+            } else if (userId instanceof Long) {
+                return (Long) userId;
+            } else {
+                throw new JwtProcessingException("Invalid userId claim type: " + userId,null);
+            }
+        } catch (Exception e) {
+            throw new JwtProcessingException("Error extracting userId", e);
         }
     }
 
