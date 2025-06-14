@@ -1,5 +1,6 @@
 package com.cart.order.controller;
 
+import com.cart.order.dto.OrderDto;
 import com.cart.order.dto.OrderRequest;
 import com.cart.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +28,10 @@ public class OrderController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getOrderById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(orderService.getOrderById(id));
+    }
+
+    @GetMapping("/internal/{id}")
+    public OrderDto getByIdInternal(@PathVariable("id") Long id) {
+        return orderService.getOrderById(id);
     }
 }

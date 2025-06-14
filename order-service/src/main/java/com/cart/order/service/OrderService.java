@@ -2,6 +2,7 @@ package com.cart.order.service;
 
 import com.cart.common.response.ApiResponse;
 import com.cart.order.client.ProductClient;
+import com.cart.order.dto.OrderDto;
 import com.cart.order.dto.OrderRequest;
 import com.cart.order.entity.Order;
 import com.cart.order.repository.OrderRepository;
@@ -46,10 +47,18 @@ public class OrderService {
         return ApiResponse.success("Order created successfully", order);
     }
 
-    public ApiResponse<?> getOrderById(Long id) {
+    public OrderDto getOrderById(Long id) {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Order not found with id: " + id));
-        return ApiResponse.success("Order fetched", order);
+
+        OrderDto dto = new OrderDto();
+        dto.setId(order.getId());
+        dto.setProductId(order.getProductId());
+        dto.setQuantity(order.getQuantity());
+        dto.setUserId(order.getUserId());
+        dto.setCreatedAt(order.getCreatedAt());
+
+        return dto;
     }
 
     public ApiResponse<?> getAllOrders() {

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(
     name = "product-service",
-    url = "${PRODUCT_SERVICE_URL}"  // asegúrate que coincida con tu puerto
+    url = "${PRODUCT_SERVICE_URL}"
 )
 public interface ProductClient {
     @GetMapping("/api/products/internal/{productId}")
